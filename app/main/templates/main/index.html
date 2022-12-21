@@ -1,5 +1,7 @@
 {% extends "main/base.html" %}
 
+{% block title %} Places and memories {% endblock title %}
+
 {% block page_header %}
 <div class="jumbotron">
     <h1 class="display-3"> Places and memories </h1>
@@ -7,8 +9,7 @@
         Here you can save your best memories and
         experience about places you've visited.
     </p>
-    <a class="btn btn-lg btn-primary" href="{% url 'main:index' %}" role="button"> Register </a>
-    <a class="btn btn-lg btn-primary" href="{% url 'main:index' %}" role="button"> Login with Google </a>
+
 
 </div>
 {% endblock page_header %}
