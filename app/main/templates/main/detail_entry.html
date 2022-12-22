@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+
+{% block title %} My memories in  {{ place.place }} {% endblock title %}
+
+{% block page_header %}
+    <h2> My memories in {{ place.place }} ( {{ place.date_added|timesince }} ago ) </h2>
+{% endblock page_header %}
+
+{% block content %}
+
+    {% if place.photo%}
+        <img src="{{ place.photo.url }}" class="img-news" alt="{{ place.place }}">
+    {% endif %}
+
+    <p>{{ place.text }}</p>
+    <p>{{ place.date_added }}</p>
+
+    <a class="btn btn-outline-primary" href="{% url 'main:index' %}" role="button"> Add a new place </a>
+    <a class="btn btn-outline-primary" href="{% url 'main:index' %}" role="button"> Edit this one </a>
+{% endblock content %}

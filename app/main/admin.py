@@ -25,7 +25,8 @@ class MemoriesAdmin(admin.ModelAdmin):
     # slug field will be added automatically
     prepopulated_fields = {'slug': ('place',)}
 
-    # add special function:
+    # add special function to get thumbnails visible in admin panel:
+    # change 'width '  to get it bigger or smaller
     def get_photo(self, obj):
         # избежать ошибки если фото не существует
         if obj.photo:

@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+
+{% block title %} All the places I've been to {% endblock title %}
+
+{% block page_header %} <h1> All the places I've been to </h1>  {% endblock page_header %}
+
+{% block content %}
+    <ul>
+      {% for memory in memories %}
+        <li><h3>
+          <a href="{% url 'main:memories' memory.slug %}"> {{ memory.place }} </a>
+        </h3></li>
+      {% empty %}
+      <li><h3>No topics have been added yet.</h3></li>
+      {% endfor %}
+    </ul>
+
+    <a class="btn btn-outline-primary" href="{% url 'main:index' %}" role="button"> Add a new place </a>
+{% endblock content %}
