@@ -19,7 +19,7 @@ class MemoriesAdmin(admin.ModelAdmin):
     # fields we can see in every entry
     fields = ('id', 'owner', 'place', 'text', 'slug',  'photo', 'get_photo', 'date_added')
 
-    readonly_fields = ('id', 'date_added')
+    readonly_fields = ('id', 'date_added',  'get_photo')
     # put one more "save" button
     save_on_top = True
     # slug field will be added automatically

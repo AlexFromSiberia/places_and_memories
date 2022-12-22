@@ -9,7 +9,7 @@ class Memory (models.Model):
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
     # Photos will be saved to (for example path): MEDIA_ROOT/photos/2023/01/30
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', null=True, blank=True)
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default='photos/default.png')
 
     class Meta:
         verbose_name_plural = 'Memories'
