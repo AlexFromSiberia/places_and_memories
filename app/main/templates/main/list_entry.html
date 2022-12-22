@@ -2,7 +2,17 @@
 
 {% block title %} All the places I've been to {% endblock title %}
 
-{% block page_header %} <h3> Hello, {{ user.username }}, here are all your places and memories </h3> {% endblock page_header %}
+{% block page_header %} <h3> Hello, {{ user.username }}, here are all your places and memories </h3>
+
+<img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-news" alt="{{ place.place }}">
+
+<p>UID: {{ user.socialaccount_set.all.0.uid }}</p>
+<p>Date Joined: {{ user.socialaccount_set.all.0.date_joined}}</p>
+<p>Last Login: {{ user.socialaccount_set.all.0.last_login}}</p>
+<p> Full Name: {{ user.socialaccount_set.all.0.extra_data.name }}</p>
+
+
+{% endblock page_header %}
 
 {% block content %}
     <ul>
