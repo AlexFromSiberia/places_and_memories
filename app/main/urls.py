@@ -9,7 +9,7 @@ app_name = 'main'
 urlpatterns = [
     path('', views.index, name='index'),
     # the page with all places
-    path('plases/', Places.as_view(), name='places'),
+    path('places/', Places.as_view(), name='places'),
     # # the page with info on specific place
     path('memories/<str:slug>/', Memories.as_view(), name='memories'),
 

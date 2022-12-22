@@ -17,3 +17,18 @@ class MemoryForm(ModelForm):
             "photo": ClearableFileInput(attrs={'class': 'form-control'}),
         }
 
+
+class AddMemoryForm(ModelForm):
+    """Create/Update form for a memory entry"""
+    class Meta:
+        # we use the only model we have
+        model = Memory
+        fields = ['place', 'text', 'photo', ]
+
+        # widgets will define how it's going to look like
+        widgets = {
+            "place": TextInput(attrs={'class': 'form-control', 'placeholder': "Name of the place"}),
+            "text": Textarea(attrs={'class': 'form-control', 'placeholder': 'Full text'}),
+            "photo": ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+

@@ -1,6 +1,9 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+
+from .forms import MemoryForm, AddMemoryForm
 from django.contrib.auth.decorators import login_required
 from .models import Memory
 from django.views.generic.list import ListView
@@ -32,26 +35,21 @@ class Memories(DetailView):
     allow_empty = False
 
 
-class MemoryUpdate(SuccessMessageMixin, UpdateView, PermissionRequiredMixin, ):
+class MemoryUpdate(SuccessMessageMixin, UpdateView):
     """Page: Update memory (for memory owner only)"""
     model = Memory
-    template_name = 'main/detail_entry.html'
+    form_class = AddMemoryForm
+    template_name = 'main/update_entry.html'
     context_object_name = "place"
     allow_empty = False
+    success_url = reverse_lazy("main:places")
+    success_message = 'Memory has been successfully updated!'
 
 
-
-    template_name = 'news/update_an_article.html'
-    form_class = AddArticleForm
-    success_url = reverse_lazy("news_index")
-    permission_required = 'news.can_delete_news_article'
-    success_message = 'Article has been successfully updated!'
-
-
-class ArticleDelete(SuccessMessageMixin, DeleteView, PermissionRequiredMixin):
-    """Page: Delete article (for stuff only)"""
-    model = NewsArticles
-    success_url = reverse_lazy("news_index")
-    template_name = 'news/article_delete.html'
-    permission_required = 'news.can_delete_news_article'
-    success_message = 'Article has been successfully deleted!'
+# class ArticleDelete(SuccessMessageMixin, DeleteView, PermissionRequiredMixin):
+#     """Page: Delete article (for stuff only)"""
+#     model = NewsArticles
+#     success_url = reverse_lazy("news_index")
+#     template_name = 'news/article_delete.html'
+#     permission_required = 'news.can_delete_news_article'
+#     success_message = 'Article has been successfully deleted!'

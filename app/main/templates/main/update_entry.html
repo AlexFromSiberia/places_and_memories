@@ -1,0 +1,24 @@
+{% extends "main/base.html" %}
+
+{% block title %} My memories in  {{ place.place }} {% endblock title %}
+
+{% block page_header %}
+    <h2> My memories in {{ place.place }} </h2>
+{% endblock page_header %}
+
+{% block content %}
+    <form class="form" action="{% url 'main:update_memory' place.slug %}" method='post'>
+        {%csrf_token %}
+            <h5>Place:</h5>
+            {{ form.place }}<br>
+
+            <h5>Add an image:</h5>
+            {{ form.photo }}<br>
+
+            <h5>Full text:</h5>
+            {{ form.text }}<br>
+
+            <p style="color:red">{{ error }}</p>
+        <button class="btn btn-outline-primary" type="submit"> Update! </button>
+    </form>
+{% endblock content %}
