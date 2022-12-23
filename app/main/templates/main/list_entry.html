@@ -4,7 +4,9 @@
 
 {% block page_header %} <h3> Hello, {{ user.username }}, here are all your places and memories </h3>
 
-<img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="img-news" alt="{{ place.place }}">
+{% if user.socialaccount_set.all.0.get_avatar_url %}
+    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar" alt="{{ place.place }}">
+{% endif %}
 
 <p>UID: {{ user.socialaccount_set.all.0.uid }}</p>
 <p>Date Joined: {{ user.socialaccount_set.all.0.date_joined}}</p>

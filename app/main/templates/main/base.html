@@ -14,43 +14,77 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+
+
+<style>
+
+.avatar {
+    width: 50px;
+    margin-right: 10px;
+}
+
+.navbar .navbar-dark .bg-primary {
+    display: flex !important;
+    flex-basis: auto;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: space-between;
+    align-items: center;
+}
+
+</style>
+
+
+
+<nav class="navbar navbar-dark bg-primary">
     <a class="navbar-brand" href="{% url 'main:index' %}"> Places and memories </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarCollapse" aria-controls="navbarCollapse"
-            aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-            {% if user.is_authenticated %}
+    <ul class="navbar-nav mr-auto">
+        {% if user.is_authenticated %}
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:places' %}">Places </a>
-                </li>
+            <p>{{ user.username }}</p>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:logout' %}">Log out</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'main:places' %}">My Places </a>
+            </li>
 
-            {% else %}
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'users:logout' %}">Log out</a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:register' %}">Register</a>
-                </li>
+            <li>
+                {% if user.socialaccount_set.all.0.get_avatar_url  %}
+                     <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar" >
+                {% endif %}
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:login' %}">Login</a>
-                </li>
+        {% else %}
 
-                <li class="nav-item">
-                    <a class="nav-link" href="http://127.0.0.1:8000/accounts/google/login/">Login with Google</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'users:register' %}">Sign up</a>
+            </li>
 
-            {% endif %}
-        </ul>
-    </div>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'account_login' %}">Sign in</a>
+            </li>
+
+        {% endif %}
+    </ul>
 </nav>
+
+{% if messages %}
+<div>
+    <strong>Messages:</strong>
+    <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+
 <main role="main" class="container">
     <div class="pb-2 mb-2 border-bottom">
         {% block page_header %} {% endblock page_header %}

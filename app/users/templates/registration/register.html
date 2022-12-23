@@ -11,8 +11,6 @@
 						<h3>Username:</h3>
 					{{ register_form.username }}
 						<p> Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
-						<h3>Email:</h3>
-					{{ register_form.email }}
 						<h3>Password:</h3>
 					{{ register_form.password1 }}
 						<ul>
@@ -26,7 +24,7 @@
 					<p> Enter the same password as before, for verification.</p>
 					<button id='registration_btn' class="btn btn-primary" type="submit">Register</button>
 				</form>
-				<p class="text-center">If you already have an account, <a href= "{%  url 'users:login' %}">login</a> instead.</p>
+				<p class="text-center">If you already have an account, <a href= "{% url 'account_login' %}">login</a> instead.</p>
 			</div>
 		</div>
 	</div>
