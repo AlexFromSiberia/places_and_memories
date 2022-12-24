@@ -3,13 +3,18 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
-from .forms import MemoryForm, AddMemoryForm
+from .forms import MemoryForm
 from django.contrib.auth.decorators import login_required
 from .models import Memory
 from django.views.generic.list import ListView
 from django.views.generic import DetailView, UpdateView
 # from .forms import TopicForm, EntryForm
 from django.http import Http404
+import folium
+
+
+from branca.element import MacroElement  # delete it
+from jinja2 import Template # delete it
 
 
 def index(request):
@@ -35,15 +40,74 @@ class Memories(DetailView):
     allow_empty = False
 
 
+# class LatLngPopup(MacroElement):
+#     """
+#     When one clicks on a Map that contains a LatLngPopup,
+#     a popup is shown that displays the latitude and longitude of the pointer.
+#     """
+#     _template = Template(u"""
+#             {% macro script(this, kwargs) %}
+#                 var {{this.get_name()}} = L.popup();
+#                 function latLngPop(e) {
+#                     {{this.get_name()}}
+#                         .setLatLng(e.latlng)
+#                         .setContent("Latitude: " + e.latlng.lat.toFixed(4) +
+#                                     "<br>Longitude: " + e.latlng.lng.toFixed(4))
+#                         .openOn({{this._parent.get_name()}});
+#                     parent.document.getElementById("id_lng").value = e.latlng.lng.toFixed(4);
+#                     parent.document.getElementById("id_lat").value = e.latlng.lat.toFixed(4);
+#                     }
+#                 {{this._parent.get_name()}}.on('click', latLngPop);
+#             {% endmacro %}
+#             """)  # noqa
+#
+#     def __init__(self):
+#         super(LatLngPopup, self).__init__()
+#         self._name = 'LatLngPopup'
+
+
 class MemoryUpdate(SuccessMessageMixin, UpdateView):
     """Page: Update memory (for memory owner only)"""
     model = Memory
-    form_class = AddMemoryForm
+    form_class = MemoryForm
     template_name = 'main/update_entry.html'
     context_object_name = "place"
     allow_empty = False
     success_url = reverse_lazy("main:places")
     success_message = 'Memory has been successfully updated!'
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # getting coordinates for already existing point
+        if self.object.latitude and self.object.longitude:
+            latitude = self.object.latitude
+            longitude = self.object.longitude
+        else:
+            latitude = 0
+            longitude = 0
+        # Getting place name
+        if self.object.place:
+            place = self.object.place
+
+        # Getting place name
+        if self.object.text:
+            text = self.object.text
+
+        m = folium.Map([latitude, longitude], zoom_start=5)
+        test = folium.Html(f'<strong>{place}</strong>', script=True)
+        popup = folium.Popup(test, max_width=2650)
+        folium.RegularPolygonMarker(location=[latitude, longitude],
+                                    popup=popup,
+                                    tooltip=f"Click me to get place name ! Full memory: {text}").add_to(m)
+        folium.LatLngPopup().add_to(m)
+        m = m._repr_html_()
+        context['map'] = m
+        return context
+
+
+
 
 
 # class ArticleDelete(SuccessMessageMixin, DeleteView, PermissionRequiredMixin):

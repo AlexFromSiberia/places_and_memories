@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 class Memory (models.Model):
     place = models.CharField(max_length=200)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
     slug = models.SlugField(max_length=255, verbose_name='Url', unique=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
