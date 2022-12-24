@@ -7,14 +7,14 @@ from .forms import MemoryForm
 from django.contrib.auth.decorators import login_required
 from .models import Memory
 from django.views.generic.list import ListView
-from django.views.generic import DetailView, UpdateView
-# from .forms import TopicForm, EntryForm
+from django.views.generic import DetailView, UpdateView, DeleteView
+
 from django.http import Http404
 import folium
 
 
-from branca.element import MacroElement  # delete it
-from jinja2 import Template # delete it
+from branca.element import MacroElement           # delete it
+from jinja2 import Template                       # delete it
 
 
 def index(request):
@@ -76,7 +76,6 @@ class MemoryUpdate(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("main:places")
     success_message = 'Memory has been successfully updated!'
 
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -107,13 +106,16 @@ class MemoryUpdate(SuccessMessageMixin, UpdateView):
         return context
 
 
+class MemoryDelete(SuccessMessageMixin, DeleteView, PermissionRequiredMixin):
+    """Page: Delete Memories """
+    #permission_required = 'news.can_delete_news_article'
+
+    model = Memory
+    template_name = 'main/delete_entry.html'
+    success_url = reverse_lazy("main:places")
+    success_message = 'Memory about the place has been successfully deleted!'
+    context_object_name = "place"
 
 
 
-# class ArticleDelete(SuccessMessageMixin, DeleteView, PermissionRequiredMixin):
-#     """Page: Delete article (for stuff only)"""
-#     model = NewsArticles
-#     success_url = reverse_lazy("news_index")
-#     template_name = 'news/article_delete.html'
-#     permission_required = 'news.can_delete_news_article'
-#     success_message = 'Article has been successfully deleted!'
+

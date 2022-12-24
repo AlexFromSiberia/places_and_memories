@@ -1,8 +1,24 @@
-Places Remember
-Цель
+# Places and Memories
+
+----
+
+## Extra information:
+
+Click event on maps with Folium and information retrieval:
+- https://gis.stackexchange.com/questions/313382/click-event-on-maps-with-folium-and-information-retrieval/353035#353035
+Folium map module quick start:
+- https://python-visualization.github.io/folium/quickstart.html
+
+Google and VK authentication:
+- https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
+
+----
+
+## Цель
 Создать веб-приложение, с помощью которого люди смогут хранить свои впечатления о посещаемых
 местах.
-Описание задачи
+
+## Описание задачи
 Пользователь заходит на сайт и видит страницу с кратким описанием сервиса. Также, он замечает
 кнопки “Войти с помощью Google/VK”, нажимая на которую Google/VK предлагает ему разрешить доступ
 к его базовой информации.
@@ -18,7 +34,8 @@ Places Remember
 После выхода он должен попасть на приветственную страницу сервиса без возможности видеть список
 посещаемых мест. При повторной авторизации через Google/VK пользователь снова видит все свои
 добавленные места.
-Требования к реализации:
+
+## Требования к реализации:
 ● Приложение должно быть реализовано на базе фреймворка Django.
 ● Оформление кода должно соответствовать стандартам (PEP8, Django coding style)
 ● Все используемые зависимости должны быть актуальными на момент создания проекта.

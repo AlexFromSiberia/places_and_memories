@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import Places, Memories, MemoryUpdate
+from .views import Places, Memories, MemoryUpdate, MemoryDelete
 
 app_name = 'main'
 
@@ -16,8 +16,11 @@ urlpatterns = [
     # # the page to add new places
     # path('new_place/', views.new_place, name='new_place'),
 
-    # Page for editing an entry.
+    # Page for updating an entry.
     path('update_memory/<str:slug>/', MemoryUpdate.as_view(), name='update_memory'),
+
+    # Page for deleting an entry.
+    path('delete_memory/<str:slug>/', MemoryDelete.as_view(), name='delete_memory'),
 
 ]
 

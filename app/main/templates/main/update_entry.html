@@ -21,7 +21,7 @@
         }
     </script>
 </div>
-
+<div>
     <form class="form" action="{% url 'main:update_memory' place.slug %}" method='post'>
         {%csrf_token %}
             <h5>Place:</h5>
@@ -42,7 +42,9 @@
             <p style="color:red">{{ error }}</p>
         <button class="btn btn-outline-primary" type="submit"> Update! </button>
     </form>
+</div>
 
+<a class="btn btn-outline-danger" href="{% url 'main:delete_memory' place.slug %}" role="button"> Erase this memory </a>
 
 {% endblock content %}
 
