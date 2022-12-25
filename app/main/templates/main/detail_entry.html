@@ -15,6 +15,6 @@
     <p>{{ place.text }}</p>
     <p>{{ place.date_added }}</p>
 
-    <a class="btn btn-outline-primary" href="{% url 'main:update_memory' place.slug %}" role="button"> Update this one </a>
-    <a class="btn btn-outline-danger" href="{% url 'main:delete_memory' place.slug %}" role="button"> Erase this memory </a>
+    <a class="btn btn-outline-primary" href="{% url 'main:update_memory' place.slug place.pk %}" role="button"> Update this one </a>
+    <a class="btn btn-outline-danger" href="{% url 'main:delete_memory' place.slug  place.pk %}" role="button"> Erase this memory </a>
 {% endblock content %}

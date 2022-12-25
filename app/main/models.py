@@ -6,7 +6,7 @@ class Memory (models.Model):
     place = models.CharField(max_length=200)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
-    slug = models.SlugField(max_length=255, verbose_name='Url', unique=True)
+    slug = models.SlugField(max_length=255, verbose_name='Url', unique=False)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
