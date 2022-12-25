@@ -2,21 +2,16 @@
 
 {% block title %} All the places I've been to {% endblock title %}
 
-{% block page_header %} <h3> Hello, {{ user.username }}, here are all your places and memories </h3>
+{% block page_header %}
+<div class="container_main">
+   <h3> Hello, {{ user.username }}, here are all your places and memories </h3>
 
-{% if user.socialaccount_set.all.0.get_avatar_url %}
-    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar" alt="{{ place.place }}">
-{% endif %}
-
-<p>UID: {{ user.socialaccount_set.all.0.uid }}</p>
-<p>Date Joined: {{ user.socialaccount_set.all.0.date_joined}}</p>
-<p>Last Login: {{ user.socialaccount_set.all.0.last_login}}</p>
-<p> Full Name: {{ user.socialaccount_set.all.0.extra_data.name }}</p>
-
-
+</div>
 {% endblock page_header %}
 
 {% block content %}
+
+<div class="container_main">
     <ul>
       {% for memory in memories %}
         <li><h3>
@@ -28,4 +23,6 @@
     </ul>
 
     <a class="btn btn-outline-primary" href="{% url 'main:add_memory' %}" role="button"> Add a new place </a>
+</div>
+
 {% endblock content %}

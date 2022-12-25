@@ -3,11 +3,13 @@
 {% block title %} My memories in  {{ place.place }} {% endblock title %}
 
 {% block page_header %}
-    <h2> My memories in {{ place.place }} ( {{ place.date_added|timesince }} ago ) </h2>
+<div class="container_main">
+        <h2> My memories in {{ place.place }} ( {{ place.date_added|timesince }} ago ) </h2>
+</div>
 {% endblock page_header %}
 
 {% block content %}
-
+<div class="container_main">
     <div>
         <div><h4> {{ place.place }} location: </h4></div>
 
@@ -34,4 +36,7 @@
 
 
     </div>
+
+
+</div>
 {% endblock content %}

@@ -1,0 +1,30 @@
+.container_main {
+    padding: 10px;
+
+    border: 1px solid rgba(141, 143, 147, 0.29);
+    border-radius: 7px;
+    width: 800px;
+    margin: 20px auto;
+}
+
+
+.avatar {
+    width: 50px;
+    margin-right: 10px;
+}
+
+.navbar {
+
+    display: grid;
+    padding: 10px;
+    gap: 20px;
+
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: 60px;
+	align-content: center;
+}
+
+.navbar p {
+    margin: 0;
+    padding: 0;
+}

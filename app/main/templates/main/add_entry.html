@@ -2,42 +2,49 @@
 
 {% block title %} Add new memories {% endblock title %}
 
-{% block page_header %} <h2> Add new memories </h2> {% endblock page_header %}
+{% block page_header %}
+<div class="container_main">
+    <h2> Adding new memories </h2> {% endblock page_header %}
+</div>
+
 
 {% block content %}
 
-<div>
-    <div><h4>Find your place on the map and click it:</h4></div>
-    {{map|safe}}
-    <script>
-        {
+<div class="container_main">
+      <div>
+        <div><h4>Find your place on the map and click it:</h4></div>
+        {{map|safe}}
+        <script>
             {
-                map.script.render | safe
+                {
+                    map.script.render | safe
+                }
             }
-        }
-    </script>
-</div>
-<div>
-    <form class="form" action="{% url 'main:add_memory' %}" method='post' enctype="multipart/form-data">
-        {%csrf_token %}
-            <h5>Place:</h5>
-            {{ form.place }}<br>
+        </script>
+    </div>
 
-            <h5>Latitude:</h5>
-            {{ form.latitude }}<br>
+    <div>
+        <form class="form" action="{% url 'main:add_memory' %}" method='post' enctype="multipart/form-data">
+            {%csrf_token %}
+                <h5>Place:</h5>
+                {{ form.place }}<br>
 
-            <h5>Longitude:</h5>
-            {{ form.longitude }}<br>
+                <h5>Latitude:</h5>
+                {{ form.latitude }}<br>
 
-            <h5>Add an image:</h5>
-            {{ form.photo }}<br>
+                <h5>Longitude:</h5>
+                {{ form.longitude }}<br>
 
-            <h5>Full text:</h5>
-            {{ form.text }}<br>
+                <h5>Add an image:</h5>
+                {{ form.photo }}<br>
 
-            <p style="color:red">{{ error }}</p>
-        <button class="btn btn-outline-primary" type="submit"> Add! </button>
-    </form>
+                <h5>Full text:</h5>
+                {{ form.text }}<br>
+
+                <p style="color:red">{{ error }}</p>
+            <button class="btn btn-outline-primary" type="submit"> Add! </button>
+        </form>
+    </div>
 </div>
 
 {% endblock content %}

@@ -12,10 +12,10 @@ class MemoryForm(ModelForm):
 
         # widgets will define how it's going to look like
         widgets = {
-            "latitude": TextInput(attrs={'id': "id_lat", 'class': 'form-control', 'placeholder': "Latitude of the place"}),
-            "longitude": TextInput(attrs={'id': "id_lng", 'class': 'form-control', 'placeholder': "Longitude of the place"}),
-            "place": TextInput(attrs={'class': 'form-control', 'placeholder': "Name of the place"}),
-            "text": Textarea(attrs={'class': 'form-control', 'placeholder': 'Full text'}),
+            "latitude": TextInput(attrs={'id': "id_lat", 'class': 'form-control', 'placeholder': "Enter latitude of the place"}),
+            "longitude": TextInput(attrs={'id': "id_lng", 'class': 'form-control', 'placeholder': "Enter longitude of the place"}),
+            "place": TextInput(attrs={'class': 'form-control', 'placeholder': "Enter name of the place"}),
+            "text": Textarea(attrs={'class': 'form-control', 'placeholder': 'Here you can describe all the memories'}),
             "photo": ClearableFileInput(attrs={'class': 'form-control'}),
         }
 

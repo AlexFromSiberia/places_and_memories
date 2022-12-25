@@ -3,24 +3,26 @@
 {% block title %} Delete my memories about {{ place.place }}  {% endblock title %}
 
 {% block page_header %}
-<h2> Delete my memories about {{ place.place }} </h2>
+    <div class="container_main">
+        <h2> Delete my memories about {{ place.place }} </h2>
+    </div>
 {% endblock page_header %}
 
 {% block content %}
 
-<!--    {% if user.is_staff %}-->
-<!--    {% endif %}-->
+<div class="container_main">
+    <!--    {% if user.is_staff %}-->
+    <!--    {% endif %}-->
 
-    <div class=''>
-
+    <div>
         <h4> Are you sure you want to delete memories about {{ place.place }} ? </h4>
 
         <form method="post" class="">
             {%csrf_token %}
             <button class="btn btn-danger" type="submit"> Yes, I'm sure. Delete it. </button>
         </form>
-
     </div>
+</div>
 
 {% endblock content %}
 

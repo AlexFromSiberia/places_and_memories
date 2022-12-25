@@ -2,30 +2,27 @@
 {% block title %} Registration form {% endblock title %}
 
 {% block content %}
-	<div class="features">
-		<div class="article">
-			<div class="registration" >
-				<h2>Registration:</h2>
-				<form method="POST">
-					{% csrf_token %}
-						<h3>Username:</h3>
-					{{ register_form.username }}
-						<p> Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
-						<h3>Password:</h3>
-					{{ register_form.password1 }}
-						<ul>
-							<li>Your password can’t be too similar to your other personal information.</li>
-							<li>Your password must contain at least 8 characters.</li>
-							<li>Your password can’t be a commonly used password.</li>
-							<li>Your password can’t be entirely numeric.</li>
-						</ul>
-						<h3>Password confirmation:</h3>
-					{{ register_form.password2 }}
-					<p> Enter the same password as before, for verification.</p>
-					<button id='registration_btn' class="btn btn-primary" type="submit">Register</button>
-				</form>
-				<p class="text-center">If you already have an account, <a href= "{% url 'account_login' %}">login</a> instead.</p>
-			</div>
-		</div>
+	<div class="container_main" >
+		<h2>Registration:</h2>
+		<br>
+		<form method="POST">
+			{% csrf_token %}
+				<h3>Username:</h3>
+			{{ register_form.username }}
+				<p> Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+				<h3>Password:</h3>
+			{{ register_form.password1 }}
+				<ul>
+					<li>Your password can’t be too similar to your other personal information.</li>
+					<li>Your password must contain at least 8 characters.</li>
+					<li>Your password can’t be a commonly used password.</li>
+					<li>Your password can’t be entirely numeric.</li>
+				</ul>
+				<h3>Password confirmation:</h3>
+			{{ register_form.password2 }}
+			<p> Enter the same password as before, for verification.</p>
+			<button id='registration_btn' class="btn btn-outline-primary" type="submit">Register</button>
+		</form>
+		<p class="text-center">If you already have an account, <a href= "{% url 'account_login' %}">login</a> instead.</p>
 	</div>
 {% endblock content %}
