@@ -3,7 +3,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.text import slugify
-
 from .forms import MemoryForm
 from django.contrib.auth.decorators import login_required
 from .models import Memory
@@ -13,6 +12,7 @@ from django.http import Http404, HttpResponseRedirect
 import folium
 from .addition_funcs import LatLngPopupModified
 
+# adds additional functional to folium map (ability to save coordinates to the BD)
 folium.LatLngPopup = LatLngPopupModified
 
 
@@ -36,9 +36,9 @@ class Memories(DetailView):
     model = Memory
     template_name = 'main/detail_entry.html'
     context_object_name = "place"
-    # allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        """shows map"""
         context = super().get_context_data(**kwargs)
 
         # getting coordinates for already existing point
@@ -79,6 +79,7 @@ class MemoryUpdate(SuccessMessageMixin, UpdateView):
     success_message = 'Memory has been successfully updated!'
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        """shows map"""
         context = super().get_context_data(**kwargs)
         # getting coordinates for already existing point
         if self.object.latitude and self.object.longitude:
@@ -130,45 +131,27 @@ def add_memory(request):
                                 tooltip=f"Click me ").add_to(m)
     folium.LatLngPopup().add_to(m)
     m = m._repr_html_()
-    context = {'map': m, 'form': form}
+    success_message = 'The memory has been successfully added!'
+    context = {'map': m, 'form': form, 'success_message': success_message}
     return render(request, 'main/add_entry.html', context)
 
 
 class MemoryDelete(SuccessMessageMixin, DeleteView, PermissionRequiredMixin):
     """Page: Delete memories """
-    #permission_required = 'news.can_delete_news_article'
+    # permission_required = 'news.can_delete_news_article'
 
     model = Memory
     template_name = 'main/delete_entry.html'
     success_url = reverse_lazy("main:places")
-    success_message = f'Memory about the place has been successfully deleted!'
+    success_message = 'Memory about the place has been successfully deleted!'
     context_object_name = "place"
 
 
-# class MemoryAdd(SuccessMessageMixin, CreateView, PermissionRequiredMixin):
-#     """Page: Add new memories """
-#     #permission_required = 'news.can_delete_news_article'
-#
-#     model = Memory
-#     form_class = MemoryForm
-#     template_name = 'main/add_entry.html'
-#     success_url = reverse_lazy("main:places")
-#     success_message = f'Memory about the place has been successfully added!'
-#     context_object_name = "place"
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         latitude = 0
-#         longitude = 0
-#         m = folium.Map([latitude, longitude], zoom_start=5)
-#         test = folium.Html(f'<strong>New place</strong>', script=True)
-#         popup = folium.Popup(test, max_width=2650)
-#         folium.RegularPolygonMarker(location=[latitude, longitude],
-#                                     popup=popup,
-#                                     tooltip=f"Click me ").add_to(m)
-#         folium.LatLngPopup().add_to(m)
-#         m = m._repr_html_()
-#         context['map'] = m
-#         return context
+def page_not_found(request, exception):
+    # Переменная exception содержит отладочную информацию,
+    # выводить её в шаблон пользователской страницы 404 мы не станем
+    return render(request, "404.html", {"path": request.path}, status=404 )
 
 
+def server_error(request):
+    return render(request, "500.html", status=500)

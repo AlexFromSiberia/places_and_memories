@@ -25,10 +25,16 @@
 
     <div>
         {% if place.photo%}
-            <img src="{{ place.photo.url }}" class="img-news" alt="{{ place.place }}">
+            <div class="photo">
+                <h4>Photo from there:</h4>
+                <img src="{{ place.photo.url }}" class="img-news" alt="{{ place.place }}">
+            </div>
         {% endif %}
+        <h4>My memories about the place: </h4>
+            <div class="text_memories">
 
-        <p>{{ place.text }}</p>
+                <p>{{ place.text }}</p>
+            </div>
         <p>{{ place.date_added }}</p>
 
         <a class="btn btn-outline-primary" href="{% url 'main:update_memory' place.slug place.pk %}" role="button"> Update this one </a>

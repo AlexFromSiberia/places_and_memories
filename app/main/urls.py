@@ -3,8 +3,13 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import Places, Memories, MemoryUpdate, MemoryDelete, add_memory   #MemoryAdd
+# custom 404 and 500 pages:
+from django.conf.urls import handler404, handler500
 
 app_name = 'main'
+
+handler404 = "main.views.page_not_found"
+handler500 = "main.views.server_error"
 
 urlpatterns = [
     path('', views.index, name='index'),
