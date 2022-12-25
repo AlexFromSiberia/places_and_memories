@@ -7,7 +7,6 @@
     margin: 20px auto;
 }
 
-
 .avatar {
     width: 50px;
     margin-right: 10px;
@@ -37,4 +36,9 @@
     border: 1px solid rgba(141, 143, 147, 0.29);
     border-radius: 7px;
     margin: 30px 2px;
+}
+
+img {
+    width: 100%;
+    object-fit: cover;
 }

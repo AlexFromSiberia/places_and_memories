@@ -1,6 +1,5 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.utils.text import slugify
 from .forms import MemoryForm
@@ -11,7 +10,8 @@ from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.http import Http404, HttpResponseRedirect
 import folium
 from .addition_funcs import LatLngPopupModified
-
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 # adds additional functional to folium map (ability to save coordinates to the BD)
 folium.LatLngPopup = LatLngPopupModified
 
@@ -21,21 +21,29 @@ def index(request):
     return render(request, 'main/index.html')
 
 
-class Places(ListView):
+class Places(LoginRequiredMixin, ListView):
     """Users page with a list of all their memories"""
     model = Memory
     template_name = 'main/list_entry.html'
-    # все данные по умолчанию находятся в переменной "object_list" (использовать её в template.py)
     # переопределить имя переменной "object_list" чтобы в template использовать переменную 'news' если нам так УДОБНЕЕ.
     context_object_name = "memories"
     # несуществующие страницы(в списке такого значения нет) будут показаны как 404
-    # allow_empty = False
+
+    # show only memories, created by their owner
+    def get_queryset(self):
+        if self.request.user:
+            return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
 
 
-class Memories(DetailView):
+class Memories(LoginRequiredMixin, DetailView):
     model = Memory
     template_name = 'main/detail_entry.html'
     context_object_name = "place"
+
+    # show only memories, created by their owner
+    def get_queryset(self):
+        return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
+
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """shows map"""
@@ -68,7 +76,7 @@ class Memories(DetailView):
         return context
 
 
-class MemoryUpdate(SuccessMessageMixin, UpdateView):
+class MemoryUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """Page: Update memory (for memory owner only)"""
     model = Memory
     form_class = MemoryForm
@@ -78,6 +86,11 @@ class MemoryUpdate(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("main:places")
     success_message = 'Memory has been successfully updated!'
 
+    # show only memories, created by their owner
+    def get_queryset(self):
+        return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
+
+
     def get_context_data(self, *, object_list=None, **kwargs):
         """shows map"""
         context = super().get_context_data(**kwargs)
@@ -108,6 +121,7 @@ class MemoryUpdate(SuccessMessageMixin, UpdateView):
         return context
 
 
+@login_required
 def add_memory(request):
     if request.method == 'POST':
         form = MemoryForm(request.POST, request.FILES)
@@ -116,6 +130,7 @@ def add_memory(request):
             new_memory.owner = request.user
             new_memory.slug = slugify(new_memory.place)
             new_memory.save()
+            messages.success(request, "The memory has been successfully added!")
             return HttpResponseRedirect(reverse('main:places'))
         else:
             error = 'Something went wrong, please check all the data add fill form again.'
@@ -131,20 +146,23 @@ def add_memory(request):
                                 tooltip=f"Click me ").add_to(m)
     folium.LatLngPopup().add_to(m)
     m = m._repr_html_()
-    success_message = 'The memory has been successfully added!'
-    context = {'map': m, 'form': form, 'success_message': success_message}
+
+    context = {'map': m, 'form': form}
     return render(request, 'main/add_entry.html', context)
 
 
-class MemoryDelete(SuccessMessageMixin, DeleteView, PermissionRequiredMixin):
+class MemoryDelete(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     """Page: Delete memories """
     # permission_required = 'news.can_delete_news_article'
-
     model = Memory
     template_name = 'main/delete_entry.html'
     success_url = reverse_lazy("main:places")
     success_message = 'Memory about the place has been successfully deleted!'
     context_object_name = "place"
+
+    # show only memories, created by their owner
+    def get_queryset(self):
+        return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
 
 
 def page_not_found(request, exception):

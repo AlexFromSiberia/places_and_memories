@@ -3,26 +3,31 @@
 {% block title %} All the places I've been to {% endblock title %}
 
 {% block page_header %}
-<div class="container_main">
-   <h3> Hello, {{ user.username }}, here are all your places and memories </h3>
-
-</div>
+    {% if user.is_authenticated %}
+        <div class="container_main">
+           <h3> Hello, {{ user.username }}, here are all your places and memories </h3>
+        </div>
+    {% else %}
+        <div class="container_main">
+           <h3> Hello, stranger, please register first! </h3>
+        </div>
+    {% endif %}
 {% endblock page_header %}
 
 {% block content %}
+    {% if user.is_authenticated %}
+        <div class="container_main">
+            <ul>
+              {% for memory in memories %}
+                <li><h3>
+                  <a href="{% url 'main:memories' memory.slug  memory.pk %}"> {{ memory.place }} </a>
+                </h3></li>
+              {% empty %}
+                <li><h3>You don't have any memories here yet.</h3></li>
+              {% endfor %}
+            </ul>
 
-<div class="container_main">
-    <ul>
-      {% for memory in memories %}
-        <li><h3>
-          <a href="{% url 'main:memories' memory.slug  memory.pk %}"> {{ memory.place }} </a>
-        </h3></li>
-      {% empty %}
-        <li><h3>You don't have any memories here yet.</h3></li>
-      {% endfor %}
-    </ul>
-
-    <a class="btn btn-outline-primary" href="{% url 'main:add_memory' %}" role="button"> Add a new place </a>
-</div>
-
+            <a class="btn btn-outline-primary" href="{% url 'main:add_memory' %}" role="button"> Add a new place </a>
+        </div>
+    {% endif %}
 {% endblock content %}
