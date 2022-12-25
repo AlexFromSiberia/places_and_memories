@@ -13,6 +13,7 @@
     <div><h4>Find your place on the map and click it:</h4></div>
 
     {{map|safe}}
+
     <script>
         {
             {
@@ -21,8 +22,9 @@
         }
     </script>
 </div>
+
 <div>
-    <form class="form" action="{% url 'main:update_memory' place.slug  place.pk %}" method='post'>
+    <form class="form" action="{% url 'main:update_memory' place.slug  place.pk %}" method='post' enctype="multipart/form-data">
         {%csrf_token %}
             <h5>Place:</h5>
             {{ form.place }}<br>

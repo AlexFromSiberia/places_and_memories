@@ -8,13 +8,30 @@
 
 {% block content %}
 
-    {% if place.photo%}
-        <img src="{{ place.photo.url }}" class="img-news" alt="{{ place.place }}">
-    {% endif %}
+    <div>
+        <div><h4> {{ place.place }} location: </h4></div>
 
-    <p>{{ place.text }}</p>
-    <p>{{ place.date_added }}</p>
+        {{map|safe}}
+        <script>
+            {
+                {
+                    map.script.render | safe
+                }
+            }
+        </script>
+    </div>
 
-    <a class="btn btn-outline-primary" href="{% url 'main:update_memory' place.slug place.pk %}" role="button"> Update this one </a>
-    <a class="btn btn-outline-danger" href="{% url 'main:delete_memory' place.slug  place.pk %}" role="button"> Erase this memory </a>
+    <div>
+        {% if place.photo%}
+            <img src="{{ place.photo.url }}" class="img-news" alt="{{ place.place }}">
+        {% endif %}
+
+        <p>{{ place.text }}</p>
+        <p>{{ place.date_added }}</p>
+
+        <a class="btn btn-outline-primary" href="{% url 'main:update_memory' place.slug place.pk %}" role="button"> Update this one </a>
+        <a class="btn btn-outline-danger" href="{% url 'main:delete_memory' place.slug  place.pk %}" role="button"> Erase this memory </a>
+
+
+    </div>
 {% endblock content %}

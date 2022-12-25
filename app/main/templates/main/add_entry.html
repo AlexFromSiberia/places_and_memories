@@ -18,7 +18,7 @@
     </script>
 </div>
 <div>
-    <form class="form" action="{% url 'main:add_memory' %}" method='post'>
+    <form class="form" action="{% url 'main:add_memory' %}" method='post' enctype="multipart/form-data">
         {%csrf_token %}
             <h5>Place:</h5>
             {{ form.place }}<br>
