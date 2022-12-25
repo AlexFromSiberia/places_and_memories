@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% block title %} Registration form {% endblock title %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 	<div class="container_main" >
@@ -8,10 +9,10 @@
 		<form method="POST">
 			{% csrf_token %}
 				<h3>Username:</h3>
-			{{ register_form.username }}
+			{{ register_form.username|as_crispy_field }}
 				<p> Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
 				<h3>Password:</h3>
-			{{ register_form.password1 }}
+			{{ register_form.password1|as_crispy_field }}
 				<ul>
 					<li>Your password can’t be too similar to your other personal information.</li>
 					<li>Your password must contain at least 8 characters.</li>
@@ -19,7 +20,7 @@
 					<li>Your password can’t be entirely numeric.</li>
 				</ul>
 				<h3>Password confirmation:</h3>
-			{{ register_form.password2 }}
+			{{ register_form.password2|as_crispy_field }}
 			<p> Enter the same password as before, for verification.</p>
 			<button id='registration_btn' class="btn btn-outline-primary" type="submit">Register</button>
 		</form>

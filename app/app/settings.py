@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     # this one is for VK authorization
     'allauth.socialaccount.providers.vk',
+    'crispy_forms',
 
 ]
 
@@ -144,4 +145,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = 'main:places'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
