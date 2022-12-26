@@ -1,0 +1,30 @@
+version: '3.8'
+
+volumes:
+    pgdata:
+        driver: local
+services:
+    nginx:
+        restart: always
+        image: nginx:latest
+        expose:
+          - 8080
+        ports:
+          - "3009:8080"
+        volumes:
+            - ./app/static:/srv/www/app/static
+            - ./app/media:/srv/www/app/media
+            - ./app/logs:/srv/www/app/logs
+            - ./docker/nginx:/etc/nginx/conf.d
+        depends_on:
+            - python
+    python:
+        restart: always
+        build:
+            context: .
+            dockerfile: docker/python/Dockerfile
+        volumes:
+            - ./app:/srv/www/app
+
+        command: "gunicorn -c gunicorn.py app.wsgi"
+

@@ -1,5 +1,21 @@
 # Places and Memories
 
+## Для запуска локально
+
+- Убедитесь что Docker, Docker-compose установлены;
+- Открыть терминал в папке проекта (там где лежит docker-compose.yml);
+- Выполнить:
+  - docker-compose build
+  - docker-compose up
+- Проект будет запущен на 3009 порту (lockalhost:3009)
+Изменить порт на привычный Вам: файл docker-compose.yml, строка 13.
+
+
+Для запуска локально в Docker используются: 
+- guincorn.py в app/;
+- папка docker;
+- docker-compose.yml в корне;
+- в requirements.txt: gevent, gunicorn.
 ----
 
 ## Extra information:
