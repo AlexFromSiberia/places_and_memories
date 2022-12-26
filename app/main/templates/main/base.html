@@ -12,71 +12,72 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
-
 </head>
 
 <body>
-    <nav class="navbar navbar-dark bg-primary">
+<nav class="navbar navbar-dark bg-primary">
+    <div>
+        <a class="navbar-brand" href="{% url 'main:index' %}"> Places and Memories </a>
+    </div>
+
+    {% if user.is_authenticated %}
+
+    <div>
+        <a class="nav-link active" href="{% url 'main:places' %}">My Places </a>
+    </div>
+
+    <div>
+        <a class="nav-link active" href="{% url 'users:logout' %}">Log out</a>
+    </div>
+
+    <div class="navbar">
         <div>
-            <a class="navbar-brand" href="{% url 'main:index' %}"> Places and Memories </a>
+            <p>{{ user.username }}</p>
         </div>
 
-            {% if user.is_authenticated %}
-
-                <div>
-                    <a class="nav-link active" href="{% url 'main:places' %}">My Places </a>
-                </div>
-
-                <div>
-                    <a class="nav-link active" href="{% url 'users:logout' %}">Log out</a>
-                </div>
-
-
-                <div class="navbar">
-                    <div>
-                        <p>{{ user.username }}</p>
-                    </div>
-
-                    <div>
-                            {% if user.socialaccount_set.all.0.get_avatar_url  %}
-                                 <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar" >
-                            {% endif %}
-                    </div>
-                </div>
-
-
-            {% else %}
-                <div class="navbar">
-                    <div>
-                        <a class="nav-link active" href="{% url 'users:register' %}">Sign up</a>
-                    </div>
-
-                    <div>
-                        <a class="nav-link active" href="{% url 'account_login' %}">Sign in with Google / VK</a>
-                    </div>
-                </div>
+        <div>
+            {% if user.socialaccount_set.all.0.get_avatar_url %}
+            <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar">
             {% endif %}
-    </nav>
+        </div>
+    </div>
 
-    {% if messages  %}
-        {% for message in messages %}
-            {% if message.tags == 'error' %}
-                <div class="alert alert-danger" role="alert">
-                    {{ message }}
-                </div>
-            {% else %}
-                <div class="alert alert-{{message.tags}}" role="alert">
-                    {{ message }}
-                </div>
-            {% endif %}
-        {% endfor %}
+    {% else %}
+
+    <div class="navbar">
+        <div>
+            <a class="nav-link active" href="{% url 'users:register' %}">Sign up</a>
+        </div>
+
+        <div>
+            <a class="nav-link active" href="{% url 'account_login' %}">Sign in with Google / VK</a>
+        </div>
+    </div>
     {% endif %}
+</nav>
 
-    <main role="main" class="container">
-            {% block page_header %} {% endblock page_header %}
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'error' %}
 
-            {% block content %} {% endblock content %}
-    </main>
+<div class="alert alert-danger" role="alert">
+    {{ message }}
+</div>
+
+{% else %}
+<div class="alert alert-{{message.tags}}" role="alert">
+    {{ message }}
+</div>
+
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<main role="main" class="container">
+    {% block page_header %} {% endblock page_header %}
+
+    {% block content %} {% endblock content %}
+</main>
 
 </body>
 </html>

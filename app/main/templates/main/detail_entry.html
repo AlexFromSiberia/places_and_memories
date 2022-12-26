@@ -4,7 +4,7 @@
 
 {% block page_header %}
 <div class="container_main">
-        <h2> My memories in {{ place.place }} ( {{ place.date_added|timesince }} ago ) </h2>
+    <h2 class="center"> My memories in {{ place.place }} ( {{ place.date_added|timesince }} ago ) </h2>
 </div>
 {% endblock page_header %}
 
@@ -12,37 +12,35 @@
 <div class="container_main">
     <div>
         <div><h4> {{ place.place }} location: </h4></div>
-
         {{map|safe}}
-        <script>
-            {
-                {
-                    map.script.render | safe
-                }
-            }
-        </script>
     </div>
 
     <div>
         {% if place.photo%}
-            <div class="photo">
-                <h4>Photo from there:</h4>
-                <img src="{{ place.photo.url }}" class="img-news" alt="{{ place.place }}">
-            </div>
+        <div class="photo">
+            <h4>Photo from there:</h4>
+            <img src="{{ place.photo.url }}" class="img-news" alt="{{ place.place }}">
+        </div>
         {% endif %}
-        <h4>My memories about the place: </h4>
-            <div class="text_memories">
 
-                <p>{{ place.text }}</p>
-            </div>
+        <h4>My memories about the place: </h4>
+
+        <div class="text_memories">
+            <p>{{ place.text }}</p>
+        </div>
+
         <p>{{ place.date_added }}</p>
 
-        <a class="btn btn-outline-primary" href="{% url 'main:update_memory' place.slug place.pk %}" role="button"> Update this one </a>
-        <a class="btn btn-outline-danger" href="{% url 'main:delete_memory' place.slug  place.pk %}" role="button"> Erase this memory </a>
+        <div class="center">
+            <a class="btn btn-outline-primary" href="{% url 'main:update_memory' place.slug place.pk %}" role="button">
+                Update this one </a>
+        </div>
+        <br>
 
-
+        <div class="center">
+            <a class="btn btn-outline-danger" href="{% url 'main:delete_memory' place.slug  place.pk %}" role="button">
+                Erase this memory </a>
+        </div>
     </div>
-
-
 </div>
 {% endblock content %}

@@ -13,42 +13,39 @@
 <div class="container_main">
     <div>
         <div><h4>Find your place on the map and click it:</h4></div>
-
         {{map|safe}}
-
-        <script>
-            {
-                {
-                    map.script.render | safe
-                }
-            }
-        </script>
     </div>
 
     <div>
-        <form class="form" action="{% url 'main:update_memory' place.slug  place.pk %}" method='post' enctype="multipart/form-data">
+        <form class="form" action="{% url 'main:update_memory' place.slug  place.pk %}" method='post'
+              enctype="multipart/form-data">
             {%csrf_token %}
-                <h5>Place:</h5>
-                {{ form.place }}<br>
+            <h5>Place:</h5>
+            {{ form.place }}<br>
 
-                <h5>Latitude:</h5>
-                {{ form.latitude }}<br>
+            <h5>Latitude:</h5>
+            {{ form.latitude }}<br>
 
-                <h5>Longitude:</h5>
-                {{ form.longitude }}<br>
+            <h5>Longitude:</h5>
+            {{ form.longitude }}<br>
 
-                <h5>Add an image:</h5>
-                {{ form.photo }}<br>
+            <h5>Add an image:</h5>
+            {{ form.photo }}<br>
 
-                <h5>Full text:</h5>
-                {{ form.text }}<br>
+            <h5>Full text:</h5>
+            {{ form.text }}<br>
 
-                <p style="color:red">{{ error }}</p>
-            <button class="btn btn-outline-primary" type="submit"> Update! </button>
+            <p style="color:red">{{ error }}</p>
+            <div class="center">
+                <button class="btn btn-outline-primary" type="submit"> Update!</button>
+            </div>
         </form>
     </div>
     <br>
-    <a class="btn btn-outline-danger" href="{% url 'main:delete_memory' place.slug  place.pk %}" role="button"> Erase this memory </a>
+    <div class="center">
+        <a class="btn btn-outline-danger" href="{% url 'main:delete_memory' place.slug  place.pk %}" role="button"> Erase
+        this memory </a>
+    </div>
 </div>
 {% endblock content %}
 

@@ -1,17 +1,18 @@
-from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.utils.text import slugify
-from .forms import MemoryForm
-from django.contrib.auth.decorators import login_required
-from .models import Memory
 from django.views.generic.list import ListView
 from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
-from django.http import Http404, HttpResponseRedirect
-import folium
-from .addition_funcs import LatLngPopupModified
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import login_required
+from .addition_funcs import LatLngPopupModified
+from .models import Memory
+from .forms import MemoryForm
+import folium
+
 # adds additional functional to folium map (ability to save coordinates to the BD)
 folium.LatLngPopup = LatLngPopupModified
 
@@ -25,25 +26,25 @@ class Places(LoginRequiredMixin, ListView):
     """Users page with a list of all their memories"""
     model = Memory
     template_name = 'main/list_entry.html'
-    # переопределить имя переменной "object_list" чтобы в template использовать переменную 'news' если нам так УДОБНЕЕ.
     context_object_name = "memories"
-    # несуществующие страницы(в списке такого значения нет) будут показаны как 404
+    # set up pagination - 3 entries on a page
+    paginate_by = 3
 
-    # show only memories, created by their owner
     def get_queryset(self):
+        """show only memories, created by their owner"""
         if self.request.user:
             return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
 
 
 class Memories(LoginRequiredMixin, DetailView):
+    """Page: detail view a memory"""
     model = Memory
     template_name = 'main/detail_entry.html'
     context_object_name = "place"
 
-    # show only memories, created by their owner
     def get_queryset(self):
+        """show only memories, created by their owner"""
         return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
-
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """shows map"""
@@ -67,7 +68,7 @@ class Memories(LoginRequiredMixin, DetailView):
         m = folium.Map([latitude, longitude], zoom_start=5)
         test = folium.Html(f'<strong>{place}</strong>', script=True)
         popup = folium.Popup(test, max_width=2650)
-        folium.RegularPolygonMarker(location=[latitude, longitude],
+        folium.Marker(location=[latitude, longitude],
                                     popup=popup,
                                     tooltip=f"Click me to get place name ! Full memory: {text}").add_to(m)
         folium.LatLngPopup().add_to(m)
@@ -86,10 +87,9 @@ class MemoryUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("main:places")
     success_message = 'Memory has been successfully updated!'
 
-    # show only memories, created by their owner
     def get_queryset(self):
+        """show only memories, created by their owner"""
         return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
-
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """shows map"""
@@ -112,7 +112,7 @@ class MemoryUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         m = folium.Map([latitude, longitude], zoom_start=5)
         test = folium.Html(f'<strong>{place}</strong>', script=True)
         popup = folium.Popup(test, max_width=2650)
-        folium.RegularPolygonMarker(location=[latitude, longitude],
+        folium.Marker(location=[latitude, longitude],
                                     popup=popup,
                                     tooltip=f"Click me to get place name ! Full memory: {text}").add_to(m)
         folium.LatLngPopup().add_to(m)
@@ -123,6 +123,7 @@ class MemoryUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 @login_required
 def add_memory(request):
+    """Page: Add a new memory"""
     if request.method == 'POST':
         form = MemoryForm(request.POST, request.FILES)
         if form.is_valid():
@@ -133,7 +134,7 @@ def add_memory(request):
             messages.success(request, "The memory has been successfully added!")
             return HttpResponseRedirect(reverse('main:places'))
         else:
-            error = 'Something went wrong, please check all the data add fill form again.'
+            messages.error(request, "Something went wrong, please check all the data add fill form again")
 
     form = MemoryForm()
     latitude = 0
@@ -141,7 +142,7 @@ def add_memory(request):
     m = folium.Map([latitude, longitude], zoom_start=5)
     test = folium.Html(f'<strong>New place</strong>', script=True)
     popup = folium.Popup(test, max_width=2650)
-    folium.RegularPolygonMarker(location=[latitude, longitude],
+    folium.Marker(location=[latitude, longitude],
                                 popup=popup,
                                 tooltip=f"Click me ").add_to(m)
     folium.LatLngPopup().add_to(m)
