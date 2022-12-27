@@ -33,7 +33,7 @@ jobs:
 
       # Move into the Django project folder (./app) and run pytest
       - name: Test with pytest
-        working-directory: ./app
+        working-directory: ./app/main
         run: pytest -vv
                
             
