@@ -1,6 +1,9 @@
 # Places and Memories
 
-## Для запуска локально
+Проект доступен для теста по адресу : http://alexfromsiberia.site/
+Посмотреть остальные проекты можно тут: http://alexfromsiberia.site:3009
+
+## Для запуска локально:
 
 - Убедитесь что Docker, Docker-compose установлены;
 - Открыть терминал в папке проекта (там где лежит docker-compose.yml);
@@ -20,13 +23,10 @@
 
 ## Extra information:
 
-Click event on maps with Folium and information retrieval:
-- https://gis.stackexchange.com/questions/313382/click-event-on-maps-with-folium-and-information-retrieval/353035#353035
-Folium map module quick start:
-- https://python-visualization.github.io/folium/quickstart.html
+- Click event on maps with Folium and information retrieval: https://gis.stackexchange.com/questions/313382/click-event-on-maps-with-folium-and-information-retrieval/353035#353035
+- Folium map module quick start: https://python-visualization.github.io/folium/quickstart.html
 
-Google and VK authentication:
-- https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
+- Google and VK authentication: - https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 
 ----
 
@@ -34,7 +34,7 @@ Google and VK authentication:
 Создать веб-приложение, с помощью которого люди смогут хранить свои впечатления о посещаемых
 местах.
 
-## Описание задачи
+## Описание проекта
 Пользователь заходит на сайт и видит страницу с кратким описанием сервиса. Также, он замечает
 кнопки “Войти с помощью Google/VK”, нажимая на которую Google/VK предлагает ему разрешить доступ
 к его базовой информации.
@@ -63,7 +63,8 @@ github.
 ● Возможно использование любых сторонних пакетов, для стилей рекомендуется использовать
 bootstrap.
 ● Если что-то не удалось сделать, необходимо описать проблемы в файле README.md
-Будет плюсом:
+
+## Будет плюсом:
 ● Запуск тестов при новых коммитах реализован с использованием github actions.
 ● Локальный запуск через docker/docker-compose
 ● В README проекта есть бейдж с текущим покрытием тестами (https://coveralls.io/).
