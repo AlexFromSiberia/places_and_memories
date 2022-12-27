@@ -6,17 +6,17 @@ from django.test import Client
 
 class TestMemoryModel(TestCase):
 
-    def test_setup(self):
+    def setUp(self):
         user = User.objects.create(username='testuser')
         user.set_password('12345')
         user.save()
 
-    def test_LoginRedirection(self):
+    def testLoginRedirection(self):
         c = Client()
         response = c.post('/accounts/login/', {'login': 'testuser', 'password': '12345'})
         self.assertEqual(response.status_code, 302)
 
-    def test_IndexPageOpen(self):
+    def testIndexPageOpen(self):
         """Logged in user opens index page"""
         c = Client()
         user = User.objects.get(username="testuser")
@@ -24,7 +24,7 @@ class TestMemoryModel(TestCase):
         response = c.get('')
         self.assertEqual(response.status_code, 200)
 
-    def test_UserPageOpen(self):
+    def testUserPageOpen(self):
         """Logged in user opens user page"""
         c = Client()
         user = User.objects.get(username="testuser")
@@ -32,7 +32,7 @@ class TestMemoryModel(TestCase):
         response = c.get('/places/')
         self.assertEqual(response.status_code, 200)
 
-    def test_AddMemoryPageOpen(self):
+    def testAddMemoryPageOpen(self):
         """Logged in user opens Add memory page"""
         c = Client()
         user = User.objects.get(username="testuser")
@@ -40,7 +40,7 @@ class TestMemoryModel(TestCase):
         response = c.get('/add_memory/')
         self.assertEqual(response.status_code, 200)
 
-    def test_UpdatePageOpen(self):
+    def testUpdatePageOpen(self):
         """Logged in user opens update memory page"""
         c = Client()
         user = User.objects.get(username="testuser")
@@ -56,7 +56,7 @@ class TestMemoryModel(TestCase):
         response = c.get('/update_memory/django/1/')
         self.assertEqual(response.status_code, 200)
 
-    def test_DeletePageOpen(self):
+    def testDeletePageOpen(self):
         """Logged in user opens Delete memory page"""
         c = Client()
         user = User.objects.get(username="testuser")
@@ -72,13 +72,13 @@ class TestMemoryModel(TestCase):
         response = c.get('/delete_memory/django/1/')
         self.assertEqual(response.status_code, 200)
 
-    def test_IndexPageOpenLoggedOut(self):
+    def testIndexPageOpenLoggedOut(self):
         """LoggedOut user opens index page"""
         c = Client()
         response = c.post('')
         self.assertEqual(response.status_code, 200)
 
-    def test_UserPageOpenLoggedOut(self):
+    def testUserPageOpenLoggedOut(self):
         """LoggedOut user opens user page"""
         c = Client()
         user = User.objects.get(username="testuser")
@@ -86,25 +86,25 @@ class TestMemoryModel(TestCase):
         response = c.get('/places/')
         self.assertEqual(response.status_code, 200)
 
-    def test_AddMemoryPageOpenLoggedOut(self):
+    def testAddMemoryPageOpenLoggedOut(self):
         """LoggedOut user opens Add memory page"""
         c = Client()
         response = c.get('/add_memory/')
         self.assertEqual(response.status_code, 302)
 
-    def test_UpdatePageOpenLoggedOut(self):
+    def testUpdatePageOpenLoggedOut(self):
         """LoggedOut user opens update memory page"""
         c = Client()
         response = c.get('/update_memory/django/1/')
         self.assertEqual(response.status_code, 302)
 
-    def test_DeletePageOpenLoggedOut(self):
+    def testDeletePageOpenLoggedOut(self):
         """LoggedOut user opens Delete memory page"""
         c = Client()
         response = c.get('/delete_memory/django/1/')
         self.assertEqual(response.status_code, 302)
 
-    def test_MemoryCreation(self):
+    def testMemoryCreation(self):
         """Logged in user creates a memory"""
         c = Client()
         user = User.objects.get(username="testuser")
