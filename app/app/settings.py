@@ -6,7 +6,8 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+# Use '.env' file for credentials: SECRET_KEY = os.getenv('SECRET_KEY')  !!!
+SECRET_KEY = "qqqqqqqqqqwwwwwwwwwwwwweeeeeeeeeeeeeeerrrrrrrrrrtttttttttttyyyyyyyyyyy1234YTRTERWQ"
 
 DEBUG = True
 

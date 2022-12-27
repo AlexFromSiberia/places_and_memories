@@ -1,14 +1,15 @@
 # Places and Memories
 
-- Badge проекта:
-[![Build Status](https://github.com/AlexFromSiberia/places_and_memories/actions/workflows/workflow1.yml/bage.svg?branch=master)](https://github.com/AlexFromSiberia/places_and_memories/actions/workflows/workflow1.yml)
+- Badge проекта: [![Build Status](https://github.com/AlexFromSiberia/places_and_memories/actions/workflows/workflow1.yml/badge.svg?branch=master)](https://github.com/AlexFromSiberia/places_and_memories/actions/workflows/workflow1.yml)
 
 - Проект доступен для теста по адресу : http://alexfromsiberia.site/
+
 - Посмотреть остальные проекты можно тут: http://alexfromsiberia.site:3009
 
 ## Для запуска локально:
 
-- Убедитесь что Docker, Docker-compose установлены;
+- Поменять default SECRET_KEY in settings.py если нужно
+- Убедится что Docker, Docker-compose установлены;
 - Открыть терминал в папке проекта (там где лежит docker-compose.yml);
 - Выполнить:
   - docker-compose build
