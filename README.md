@@ -1,7 +1,10 @@
 # Places and Memories
 
-Проект доступен для теста по адресу : http://alexfromsiberia.site/
-Посмотреть остальные проекты можно тут: http://alexfromsiberia.site:3009
+- Badge проекта:
+[![Build Status](https://github.com/AlexFromSiberia/places_and_memories/actions/workflows/workflow1.yml/bage.svg?branch=master)](https://github.com/AlexFromSiberia/places_and_memories/actions/workflows/workflow1.yml)
+
+- Проект доступен для теста по адресу : http://alexfromsiberia.site/
+- Посмотреть остальные проекты можно тут: http://alexfromsiberia.site:3009
 
 ## Для запуска локально:
 
