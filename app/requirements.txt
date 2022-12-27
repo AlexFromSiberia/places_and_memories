@@ -25,5 +25,3 @@ sqlparse==0.4.3
 urllib3==1.26.13
 gevent
 gunicorn
-pytest
-pytest-django
