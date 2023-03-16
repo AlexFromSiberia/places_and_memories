@@ -4,6 +4,7 @@ from main.models import Memory
 from django.test import Client
 
 
+# launch all tests with `python manage.py test`
 class TestMemoryModel(TestCase):
 
     def setUp(self):
