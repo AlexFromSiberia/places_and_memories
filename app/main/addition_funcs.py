@@ -1,6 +1,5 @@
 from folium import LatLngPopup
-from branca.element import MacroElement           # delete it
-from jinja2 import Template                       # delete it
+from jinja2 import Template
 
 
 class LatLngPopupModified(LatLngPopup):

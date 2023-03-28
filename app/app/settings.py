@@ -148,4 +148,3 @@ LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = 'main:places'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-

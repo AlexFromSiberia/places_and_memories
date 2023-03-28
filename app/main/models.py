@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Memory (models.Model):
+    """Model fir memories"""
     place = models.CharField(max_length=200)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
@@ -20,4 +21,3 @@ class Memory (models.Model):
 
     def __str__(self):
         return self.place
-
