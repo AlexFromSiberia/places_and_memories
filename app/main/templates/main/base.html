@@ -80,8 +80,6 @@
                             <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
                                     href="{% url 'account_login' %}" style="padding: 10px 20px;">Sign in with Google / VK</a></li>
 
-                            <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base active"
-                                    href="#" style="padding: 10px 20px;">Page4</a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -92,25 +90,26 @@
                             <div class="u-menu-close"></div>
                                 <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
                                     {% if user.is_authenticated %}
+                                        <li class="u-nav-item" style="color: #0f0f0f">
+                                            <p>{{ user.username }}</p>
+                                        </li>
+
+                                        {% if user.socialaccount_set.all.0.get_avatar_url %}
+                                            <li class="u-nav-item">
+                                                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar">
+                                            </li>
+                                        {% endif %}
+
                                         <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'main:places' %}" >My places</a></li>
 
                                         <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'users:logout' %}" >Log out</a></li>
 
-                                        <li class="u-nav-item">
-                                            <div>
-                                                <p>{{ user.username }}</p>
-                                                {% if user.socialaccount_set.all.0.get_avatar_url %}
-                                                    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar">
-                                                {% endif %}
-                                            </div>
-                                        </li>
                                     {% else %}
 
                                         <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'users:register' %}" >Sign up</a></li>
 
                                         <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'account_login' %}" >Sign in with Google / VK</a></li>
 
-                                        <li class="u-nav-item"><a class="u-button-style u-nav-link active" href="#">Page 4</a></li>
                                     {% endif %}
 
                                 </ul>
@@ -193,18 +192,11 @@
         {% block content %} {% endblock content %}
 
 
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-c599">
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer">
         <div class="u-clearfix u-sheet u-sheet-1">
-            <p class="u-small-text u-text u-text-variant u-text-1">Sample text. Click to select the text box. Click again or
-                double click to start editing the text.</p>
+            <p class="u-small-text u-text u-text-variant u-text-1">Это учебный некоммерческий проект. Если Вы оказались тут случайно - не сохраняйте здесь ценную информацию, т.к. проект будет удалён! <br> This is an educational non-profit project. If you ended up here by accident - do not save valuable information here, because the project will be deleted!</p>
         </div>
     </footer>
-
-    <section class="u-backlink u-clearfix u-grey-80">
-        <a class="u-link" href="#" target="_blank"> <span>Website Templates</span>  </a>
-        <p class="u-text"> <span> создано с помощью </span> </p>
-        <a class="u-link" href="#" target="_blank"> <span>Website Builder Software</span> </a>.
-    </section>
 
 </body>
 

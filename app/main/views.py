@@ -18,12 +18,12 @@ folium.LatLngPopup = LatLngPopupModified
 
 
 def index(request):
-    """Welcome page"""
+    """Welcome page."""
     return render(request, 'main/index.html')
 
 
 class Places(LoginRequiredMixin, ListView):
-    """Users page with a list of all their memories"""
+    """Users page with a list of all their memories."""
     model = Memory
     template_name = 'main/list_entry.html'
     context_object_name = "memories"
@@ -31,23 +31,23 @@ class Places(LoginRequiredMixin, ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        """Show only memories, created by their owner"""
+        """Show only memories, created by their owner."""
         if self.request.user:
             return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
 
 
 class Memories(LoginRequiredMixin, DetailView):
-    """Page: detail view a memory"""
+    """Page: detail view a memory."""
     model = Memory
     template_name = 'main/detail_entry.html'
     context_object_name = "place"
 
     def get_queryset(self):
-        """show only memories, created by their owner"""
+        """Show only memories, created by their owner."""
         return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        """Shows map"""
+        """Show map."""
         context = super().get_context_data(**kwargs)
 
         # getting coordinates for already existing point
@@ -78,7 +78,7 @@ class Memories(LoginRequiredMixin, DetailView):
 
 
 class MemoryUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    """Page: Update memory (for memory owner only)"""
+    """Page: Update memory (for memory owner only)."""
     model = Memory
     form_class = MemoryForm
     template_name = 'main/update_entry.html'
@@ -88,11 +88,11 @@ class MemoryUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = 'Memory has been successfully updated!'
 
     def get_queryset(self):
-        """show only memories, created by their owner"""
+        """Show only memories, created by their owner."""
         return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        """shows map"""
+        """Show map"""
         context = super().get_context_data(**kwargs)
         # getting coordinates for already existing point
         if self.object.latitude and self.object.longitude:
@@ -123,13 +123,13 @@ class MemoryUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 @login_required
 def add_memory(request):
-    """Page: Add a new memory"""
+    """Page: Add a new memory."""
     if request.method == 'POST':
         form = MemoryForm(request.POST, request.FILES)
         if form.is_valid():
             new_memory = form.save(commit=False)
             new_memory.owner = request.user
-            new_memory.slug = slugify(new_memory.place)
+            new_memory.slug = slugify(new_memory.place) if slugify(new_memory.place) != '' else 'NoName'
             new_memory.save()
             messages.success(request, "The memory has been successfully added!")
             return HttpResponseRedirect(reverse('main:places'))
@@ -153,7 +153,7 @@ def add_memory(request):
 
 
 class MemoryDelete(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
-    """Page: Delete memories """
+    """Page: Delete memories."""
     model = Memory
     template_name = 'main/delete_entry.html'
     success_url = reverse_lazy("main:places")
@@ -161,17 +161,17 @@ class MemoryDelete(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     context_object_name = "place"
 
     def get_queryset(self):
-        """show only memories, created by their owner"""
+        """Show only memories, created by their owner"""
         return Memory.objects.filter(owner=self.request.user).order_by('-date_added')
 
 
 def page_not_found(request, exception):
-    """Page not found"""
+    """Page not found."""
     # Переменная exception содержит отладочную информацию,
-    # выводить её в шаблон пользователской страницы 404 мы не станем
+    # выводить её в шаблон пользовательской страницы 404 мы не станем
     return render(request, "404.html", {"path": request.path}, status=404)
 
 
 def server_error(request):
-    """In case of a server error"""
+    """In case of a server error."""
     return render(request, "500.html", status=500)
