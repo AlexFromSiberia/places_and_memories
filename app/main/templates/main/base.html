@@ -1,83 +1,211 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+
+<html style="font-size: 16px;" class="u-responsive-xl">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=devise-width, initial-scale=1, shrink-to-fit=no"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock title %}</title>
-    <link rel="shortcut icon" href="{% static 'main/img/earth_logo.png' %}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="adventure tours">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+
+    <title>{% block title %} {% endblock title %}</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="shortcut icon" href="{% static 'main/img/earth_logo.png' %}">
+    <link rel="stylesheet" href="{% static 'main/css/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}" media="screen">
+    <link id="u-theme-google-font" rel="stylesheet" href="{% static 'main/css/css.css' %}">
+    <link id="u-page-google-font"  rel="stylesheet" href="{% static 'main/css/css(1).css' %}">
+    <script class="u-script" type="text/javascript"  src="{% static 'main/css/jquery-1.9.1.min.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript"  src="{% static 'main/css/nicepage.js' %}" defer=""></script>
+
+
 </head>
 
-<body>
-<nav class="navbar navbar-dark bg-primary">
-    <div>
-        <a class="navbar-brand" href="{% url 'main:index' %}"> Places and Memories </a>
-    </div>
+<body class="u-body">
 
-    {% if user.is_authenticated %}
+    <header class="u-clearfix u-header u-header" id="sec-a6db">
+        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+            <a href="/" class="u-image u-logo u-image-1">
+                <img src="{% static 'main/img/earth_logo.png' %}" class="u-logo-image u-logo-image-1">
+            </a>
+            <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+                <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;" wfd-invisible="true">
+                    <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                       href="#">
+                        <svg>
+                            <use href="#menu-hamburger"></use>
+                        </svg>
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+                            <defs>
+                                <symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                                    <rect y="1" width="16" height="2"></rect>
+                                    <rect y="7" width="16" height="2"></rect>
+                                    <rect y="13" width="16" height="2"></rect>
+                                </symbol>
+                            </defs>
+                        </svg>
+                    </a>
+                </div>
 
-    <div>
-        <a class="nav-link active" href="{% url 'main:places' %}">My Places </a>
-    </div>
+                <div class="u-nav-container" wfd-invisible="true">
+                    <ul class="u-nav u-unstyled u-nav-1">
+                        {% if user.is_authenticated %}
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="{% url 'main:places' %}" style="padding: 10px 20px;">My Places</a>
+                            </li>
+                            <li class="u-nav-item"><a
+                                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="{% url 'users:logout' %}" style="padding: 10px 20px;">Log out</a>
+                            </li>
+                            <li class="u-nav-item">
+                                    <p style="padding: 10px 20px;">{{ user.username }}  </p>
+                            </li>
+                            {% if user.socialaccount_set.all.0.get_avatar_url %}
+                                <li class="u-nav-item">
+                                    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar">
+                                </li>
+                            {% endif %}
 
-    <div>
-        <a class="nav-link active" href="{% url 'users:logout' %}">Log out</a>
-    </div>
+                        {% else %}
 
-    <div class="navbar">
-        <div>
-            <p>{{ user.username }}</p>
+                            <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="{% url 'users:register' %}" style="padding: 10px 20px;">Sign up</a></li>
+
+                            <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                                    href="{% url 'account_login' %}" style="padding: 10px 20px;">Sign in with Google / VK</a></li>
+
+                            <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base active"
+                                    href="#" style="padding: 10px 20px;">Page4</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="u-nav-container-collapse" wfd-invisible="true" style="">
+                    <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                        <div class="u-sidenav-overflow">
+                            <div class="u-menu-close"></div>
+                                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                                    {% if user.is_authenticated %}
+                                        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'main:places' %}" >My places</a></li>
+
+                                        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'users:logout' %}" >Log out</a></li>
+
+                                        <li class="u-nav-item">
+                                            <div>
+                                                <p>{{ user.username }}</p>
+                                                {% if user.socialaccount_set.all.0.get_avatar_url %}
+                                                    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar">
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                    {% else %}
+
+                                        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'users:register' %}" >Sign up</a></li>
+
+                                        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'account_login' %}" >Sign in with Google / VK</a></li>
+
+                                        <li class="u-nav-item"><a class="u-button-style u-nav-link active" href="#">Page 4</a></li>
+                                    {% endif %}
+
+                                </ul>
+                        </div>
+                    </div>
+                    <div class="u-black u-menu-overlay u-opacity u-opacity-70" wfd-invisible="true" style="display: none;"></div>
+                </div>
+
+
+                <style class="offcanvas-style">
+
+                    .u-offcanvas .u-sidenav {
+                        flex-basis: 250px !important;
+                    }
+
+                    .u-offcanvas:not(.u-menu-open-right) .u-sidenav {
+                        margin-left: -250px;
+                    }
+
+                    .u-offcanvas.u-menu-open-right .u-sidenav {
+                        margin-right: -250px;
+                    }
+
+                    @keyframes menu-shift-left {
+                        from {
+                            left: 0;
+                        }
+                        to {
+                            left: 250px;
+                        }
+                    }
+
+                    @keyframes menu-unshift-left {
+                        from {
+                            left: 250px;
+                        }
+                        to {
+                            left: 0;
+                        }
+                    }
+
+                    @keyframes menu-shift-right {
+                        from {
+                            right: 0;
+                        }
+                        to {
+                            right: 250px;
+                        }
+                    }
+
+                    @keyframes menu-unshift-right {
+                        from {
+                            right: 250px;
+                        }
+                        to {
+                            right: 0;
+                        }
+                    }
+                </style>
+            </nav>
         </div>
 
-        <div>
-            {% if user.socialaccount_set.all.0.get_avatar_url %}
-            <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="avatar">
-            {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-{{message.tags}}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </header>
+
+        {% block page_header %} {% endblock page_header %}
+
+        {% block content %} {% endblock content %}
+
+
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-c599">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <p class="u-small-text u-text u-text-variant u-text-1">Sample text. Click to select the text box. Click again or
+                double click to start editing the text.</p>
         </div>
-    </div>
+    </footer>
 
-    {% else %}
-
-    <div class="navbar">
-        <div>
-            <a class="nav-link active" href="{% url 'users:register' %}">Sign up</a>
-        </div>
-
-        <div>
-            <a class="nav-link active" href="{% url 'account_login' %}">Sign in with Google / VK</a>
-        </div>
-    </div>
-    {% endif %}
-</nav>
-
-{% if messages %}
-{% for message in messages %}
-{% if message.tags == 'error' %}
-
-<div class="alert alert-danger" role="alert">
-    {{ message }}
-</div>
-
-{% else %}
-<div class="alert alert-{{message.tags}}" role="alert">
-    {{ message }}
-</div>
-
-{% endif %}
-{% endfor %}
-{% endif %}
-
-<main role="main" class="container">
-    {% block page_header %} {% endblock page_header %}
-
-    {% block content %} {% endblock content %}
-</main>
+    <section class="u-backlink u-clearfix u-grey-80">
+        <a class="u-link" href="#" target="_blank"> <span>Website Templates</span>  </a>
+        <p class="u-text"> <span> создано с помощью </span> </p>
+        <a class="u-link" href="#" target="_blank"> <span>Website Builder Software</span> </a>.
+    </section>
 
 </body>
+
 </html>
